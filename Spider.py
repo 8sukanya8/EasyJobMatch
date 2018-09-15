@@ -33,8 +33,9 @@ def create_soup(url, parser = 'lxml'):
     :return:
     """
     response = get_url_response(url)
-    soup = BeautifulSoup(response.text, features= parser) #html.parser
-    return soup
+    if(response is not None):
+        soup = BeautifulSoup(response.text.encode('utf8'), features= parser) #html.parser
+        return soup
 
 
 def find_urls_in_str(s, context_path = None):
@@ -109,12 +110,53 @@ class Spider(object):
                     self.url_list = self.url_list + url_list
             self.url_list = [item for item in self.url_list if item not in [url]] # removing url when processed
 
-    def get_job_description(self):
+    def get_job_description(self, url):
+        soup = create_soup(url)
+        if soup is not None:
+            job_tuple = ()
+            title = soup.title
+            if title is not None:
+                title = soup.title.text
+            date_of_posting_SRE = re.search('[0-9]{2,4}/[0-9]{2,4}/[0-9]{2,4}|[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}|[0-9]{2,4}\.[0-9]{2,4}\.[0-9]{2,4}',
+            soup.text)
+            date_of_posting = ""
+            if(date_of_posting_SRE is not None):
+                date_of_posting = date_of_posting_SRE.group()
+            for func_key in config.job_description_functions.keys():
+                accessor = config.job_description_functions[func_key]
+                description = accessor(soup)
+                descr_is_useless = description is None or description.length == 0
+                if not descr_is_useless:
+                    if(job_tuple.__len__() > 0):
+                        if job_tuple[4].contents() < description.attrs['content'].__len__():
+                            job_tuple = (url,soup.text, title, date_of_posting, description) # if job tuple exists, select one with the largest description length
+                    else:
+                        job_tuple = (url, soup.text, title, date_of_posting, description) # if job_tuple does not exist, create one
+            return job_tuple
+        return None
+
+    def get_job_description_all(self):
         for url in self.url_list:
-            soup = create_soup(url)
-            title = soup.title.text
-            date_of_posting = re.search('date.*|validThr')
-            soup.find_all('TAG', string = re.compile("whatever"))
+            print(url)
+            job = self.get_job_description(url)
+            if job is not None:
+                url= job[0]
+                raw_text = job[1]
+                title = job[2]
+                date = job[3]
+                description = job[4]
+                if description is not None :
+                    if description.attrs['content']!= "":
+                        config.raw_data[url] = raw_text
+                        print(url, " : ", config.raw_data[url])
+                        config.structured_data[url] = (url, title, date, description.attrs['content'])
+                        print(url, " : ", config.structured_data[url])
+                    else:
+                        self.url_list.remove(url)
+            else:
+                self.url_list.remove(url)
+
+            #soup.find_all('TAG', string = re.compile("whatever"))
 
 
 
