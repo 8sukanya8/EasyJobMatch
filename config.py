@@ -9,13 +9,13 @@ links_tags_subtags = [('a','href'),
 employer_links stores the names of the employers, the urls to their respective career pages and a third optional value - context path
 A context path is specified for some employers when the links in their career pages pointing to jobs are partial urls. 
 '''
-employer_links = [('SwissRe', 'https://careers.swissre.com/search/?q=&q2=&locationsearch=&title=&location=CH&date=', 'https://careers.swissre.com/job'),
+employer_links = [('SwissRe', 'https://careers.swissre.com/search/?q=&q2=&locationsearch=&title=&location=CH&date=', 'https://careers.swissre.com'),
                   ('IBM', 'https://careers.ibm.com/ListJobs/All/Search/Country/CH//?lang=en', 'https://careers.ibm.com'),
                   ('Randstad', 'https://www.randstad.ch/en/jobs/s-it/', 'https://www.randstad.ch/en/jobs/s-it'),
                   ('SBB', 'https://sbb2.prospective.ch/?sprCd=de', None),
                   ('Swisscom', 'https://swisscom-professionals.prospective.ch', None)]
 
-jobs_desciption_tags = [(id, 'aufgaben-knowhow',), (property, 'og:description'), () ]
+jobs_desciption_tags = [(id, 'aufgaben-knowhow',), (property, 'og:description')]
 
 #urlList = ['https://careers.swissre.com/search/?q=&q2=&locationsearch=&title=&location=CH&date=',
 #            'https://sbb2.prospective.ch/?sprCd=de',
