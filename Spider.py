@@ -127,12 +127,12 @@ class Spider(object):
                 description = accessor(soup)
                 descr_is_useless = description is None or description.length == 0
                 if not descr_is_useless:
-                    if(job_tuple.__len__() > 0):
-                        if job_tuple[4].contents() < description.attrs['content'].__len__():
-                            job_tuple = (url,soup.text, title, date_of_posting, description) # if job tuple exists, select one with the largest description length
-                    else:
-                        job_tuple = (url, soup.text, title, date_of_posting, description) # if job_tuple does not exist, create one
-            return job_tuple
+                    #if(job_tuple.__len__() > 0):
+                    #    if job_tuple[4].contents() < description.attrs['content'].__len__():
+                    job_tuple = (url,soup.text, title, date_of_posting, description) # if job tuple exists, select one with the largest description length
+                    #else:
+                    #    job_tuple = (url, soup.text, title, date_of_posting, description) # if job_tuple does not exist, create one
+                    return job_tuple
         return None
 
     def get_job_description_all(self):
