@@ -25,3 +25,4 @@ def save_list_to_file(list, filename):
         for item in list:
             f.write("%s\n" % item)
     f.close()
+

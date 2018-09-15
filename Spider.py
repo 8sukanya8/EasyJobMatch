@@ -149,7 +149,14 @@ class Spider(object):
                     if description.attrs['content']!= "":
                         config.raw_data[url] = raw_text
                         print(url, " : ", config.raw_data[url])
-                        config.structured_data[url] = (url, title, date, description.attrs['content'])
+                        job_descp = {
+                            'url' : url,
+                            'title' : title,
+                            'date': date,
+                            'description': description.attrs['content']
+                        }
+                        config.structured_data[url] = job_descp
+                        #config.structured_data[url] = (url, title, date, description.attrs['content'])
                         print(url, " : ", config.structured_data[url])
                     else:
                         self.url_list.remove(url)

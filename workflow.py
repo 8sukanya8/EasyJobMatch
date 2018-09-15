@@ -1,9 +1,29 @@
-import dataset
+import dataset, config
 from datetime import datetime
 
-db          = dataset.connect('sqlite:///data.db')
-table_raw   = db['data_raw']
-table_clean = db['data_clean']
+def connect_to_database(dbname = 'sqlite:///data.db'):
+    db = dataset.connect('sqlite:///data.db')
+    return db
+
+def create_table_raw(db):
+    table_raw = db['data_raw']
+    return table_raw
+
+def create_table_clean(db):
+    table_clean = db['data_clean']
+    return table_clean
+
+
+def update_table_clean(table_clean, tag = 'url'):
+    for key in config.structured_data.keys():
+        table_clean.upsert(config.structured_data[key], [tag])
+
+def read_table_db(db, table_name = 'table_clean'):
+    return db[table_name] # url, title, date, description
+
+
+#for entry in db['data_clean']:
+#    print(entry)
 
 
 def main(url):
