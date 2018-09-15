@@ -14,15 +14,15 @@ employer_links = [('SwissRe', 'https://careers.swissre.com/search/?q=&q2=&locati
                   #('SBB', 'https://sbb2.prospective.ch/?sprCd=de', None),
                   #('Swisscom', 'https://swisscom-professionals.prospective.ch', None)]
 jobs_desciption_tags = [(id, 'aufgaben-knowhow',), (property, 'og:description')]
-
 job_description_functions = {"1":lambda s: s.find(property="og:description"), "2": lambda s: s.find(id="aufgaben-knowhow")}
-
 structured_data = {}
 raw_data ={}
+company_names_url_dict ={}
 
 prefix_list = ['http://', 'http://www.']
 suffix_list = ['.ch', '.com']
 
+blacklist = {}
 #urlList = ['https://careers.swissre.com/search/?q=&q2=&locationsearch=&title=&location=CH&date=',
 #            'https://sbb2.prospective.ch/?sprCd=de',
 #           'https://swisscom-professionals.prospective.ch']

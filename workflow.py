@@ -13,6 +13,12 @@ def create_table_clean(db):
     table_clean = db['data_clean']
     return table_clean
 
+def create_table(db, table_name):
+    return db['table_name']
+
+def update_table(table, dict, tag):
+    for key in dict.keys():
+        table.upsert(dict[key], [tag])
 
 def update_table_clean(table_clean, tag = 'url'):
     for key in config.structured_data.keys():

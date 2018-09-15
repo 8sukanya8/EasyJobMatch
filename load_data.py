@@ -20,9 +20,6 @@ def load_dict_from_file(filename):
     f.close()
     return eval(data)
 
-def save_list_to_file(list, filename):
-    with open(filename, 'w') as f:
-        for item in list:
-            f.write("%s\n" % item)
-    f.close()
+
+
 
