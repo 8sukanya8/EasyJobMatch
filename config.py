@@ -19,6 +19,10 @@ job_description_functions = {"1":lambda s: s.find(property="og:description"), "2
 
 structured_data = {}
 raw_data ={}
+
+prefix_list = ['http://', 'http://www.']
+suffix_list = ['.ch', '.com']
+
 #urlList = ['https://careers.swissre.com/search/?q=&q2=&locationsearch=&title=&location=CH&date=',
 #            'https://sbb2.prospective.ch/?sprCd=de',
 #           'https://swisscom-professionals.prospective.ch']
