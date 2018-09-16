@@ -50,18 +50,6 @@ for entry in table_companies:
             config.company_names_url_dict[id] = new_entry
             print(id, ", ",name, ",", valid_url)
 
-company_url_table = db_company['company_url']
-workflow.update_table(company_url_table, config.company_names_url_dict, ['id'])
-
-import Spider
-import config
-import load_data
-import workflow
-import urlGenerator
-import io
-import locateCareerPage
-db_company = workflow.connect_to_database('sqlite:///data_company_name.db')
-
 company_url_expanded = db_company['company_url_expanded']
 
 career_page_dict = {}
@@ -77,3 +65,17 @@ for entry in company_url_expanded:
     else:
         print("not found", url)
 
+career_page_table = workflow.create_table(db_company, 'career_page_table')
+workflow.update_table(career_page_table, career_page_dict)
+
+career_page_table = db_company['company_careers']
+
+for entry in career_page_table:
+    name = entry['name']
+    career_page = entry['career_url']
+    context_path = ""
+    config.employer_links.append((name, career_page, context_path))
+
+for key in career_page_dict.keys():
+    y = career_page_dict[key]
+    config.employer_links.append((y['name'],y['career_url'],''))

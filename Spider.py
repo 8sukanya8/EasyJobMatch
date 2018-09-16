@@ -1,10 +1,12 @@
 from processing import noise_removal
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, HTTPError, URLError
+import urllib3
 import requests
 import config
 import re
 import validators
+import socket
 # from Spider import create_soup, find_urls_in_str, find_tag_subtag, get_url_response
 
 def get_url_response(url):
@@ -23,6 +25,15 @@ def get_url_response(url):
     except TypeError as err2:
         raise TypeError("Type of arg ", url, " is ",type(url))
         return None
+    except  socket.gaierror:
+        pass
+    except urllib3.exceptions.NewConnectionError:
+        pass
+    except urllib3.exceptions.MaxRetryError:
+        pass
+    except ConnectionError as e:
+        pass
+
 
 def create_soup(url, parser = 'lxml'):
     """
@@ -91,6 +102,12 @@ class Spider(object):
     def __init__(self):
         self.url_list = []
 
+    def copyIntoURLList(self, url_tuple_list):
+        for tuple in url_tuple_list:
+            url = tuple[1]
+            context_path = tuple[2]
+
+
     def crawl(self, url_tuple_list):
         """
         This function searches the spider object's url_list and yields valid urls.
@@ -99,8 +116,10 @@ class Spider(object):
         """
 
         for tuple in url_tuple_list:
+            name = tuple[0]
             url = tuple[1]
             context_path = tuple[2]
+            print("crawling for company", name)
             soup = create_soup(url)
             for entry in config.links_tags_subtags:
                 tag = entry[0]
@@ -134,6 +153,7 @@ class Spider(object):
                     #    job_tuple = (url, soup.text, title, date_of_posting, description) # if job_tuple does not exist, create one
                     return job_tuple
         return None
+
 
     def get_job_description_all(self):
         for url in self.url_list:
