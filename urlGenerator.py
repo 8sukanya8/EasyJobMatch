@@ -22,6 +22,12 @@ def select_valid_url(url_list):
             #print(url)
             if verify_host(url)[url] == 0:
                 return url
+            else:
+                url = url.replace("http://", "")
+                url = url.replace("www.", "")
+                url = url.replace("https://", "")
+                if verify_host(url)[url] == 0:
+                    return url
     return None
 
 

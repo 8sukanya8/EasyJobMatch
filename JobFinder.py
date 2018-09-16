@@ -4,6 +4,7 @@ import load_data
 import workflow
 import urlGenerator
 import io
+import locateCareerPage
 
 spidy = Spider.Spider()
 spidy.crawl(config.employer_links)
@@ -52,13 +53,27 @@ for entry in table_companies:
 company_url_table = db_company['company_url']
 workflow.update_table(company_url_table, config.company_names_url_dict, ['id'])
 
+import Spider
+import config
+import load_data
+import workflow
+import urlGenerator
+import io
+import locateCareerPage
+db_company = workflow.connect_to_database('sqlite:///data_company_name.db')
 
 company_url_expanded = db_company['company_url_expanded']
 
+career_page_dict = {}
 for entry in company_url_expanded:
     id = entry['id']
     url = entry['url']
-    career_page = locateCareerPage.locate(locate_career_page)
-#load_data.save_dict_to_file(config.structured_data, "structured_data.txt")
-#load_data.save_dict_to_file(config.raw_data, "raw_data.txt")
+    career_page = locateCareerPage.locate(url)
+    if career_page is not None:
+        new_entry = entry
+        new_entry['career_url'] = career_page
+        career_page_dict[id] = new_entry
+        print(entry, career_page)
+    else:
+        print("not found", url)
 

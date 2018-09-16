@@ -23,6 +23,10 @@ prefix_list = ['http://', 'http://www.']
 suffix_list = ['.ch', '.com']
 
 blacklist = {}
+
+career_keywords = ['lehrstelle', 'ausbildung', 'karriere', 'offenestelle', 'arbeit', 'job', 'career', 'opportunities', 'vacancy', 'positions', 'open']
+
+
 #urlList = ['https://careers.swissre.com/search/?q=&q2=&locationsearch=&title=&location=CH&date=',
 #            'https://sbb2.prospective.ch/?sprCd=de',
 #           'https://swisscom-professionals.prospective.ch']
