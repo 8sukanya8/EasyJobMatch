@@ -4,7 +4,6 @@ venv/
 *.db
 __pycache__/
 .idea/
-output.txt
-clean_job_urls.txt
-raw_data.txt
-structured_data.txt
+databases/
+outputs/
+site_blacklist.csv

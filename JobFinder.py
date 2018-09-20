@@ -76,6 +76,6 @@ for entry in career_page_table:
     context_path = ""
     config.employer_links.append((name, career_page, context_path))
 
-for key in career_page_dict.keys():
-    y = career_page_dict[key]
-    config.employer_links.append((y['name'],y['career_url'],''))
+#for key in career_page_dict.keys():
+#    y = career_page_dict[key]
+#    config.employer_links.append((y['name'],y['career_url'],''))

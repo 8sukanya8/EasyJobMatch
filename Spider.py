@@ -7,6 +7,7 @@ import config
 import re
 import validators
 import socket
+import urlGenerator
 # from Spider import create_soup, find_urls_in_str, find_tag_subtag, get_url_response
 
 def get_url_response(url):
@@ -16,7 +17,7 @@ def get_url_response(url):
     :return:
     """
     try:
-        if validators.url(url):
+        if validators.url(url) and urlGenerator.verify_host(url)==0:
             r = requests.get(url)
             if r.status_code == 200:
                 return r
@@ -182,35 +183,3 @@ class Spider(object):
                         self.url_list.remove(url)
             else:
                 self.url_list.remove(url)
-
-            #soup.find_all('TAG', string = re.compile("whatever"))
-
-
-
-
-
-'''r  = requests.get("http://" +url)
-data = r.text
-soup = BeautifulSoup(data)
-
-for link in soup.find_all('a'):
-    print(link.get('href'))
-
-for link in soup.find_all('iframe'):
-    print(link.get('src'))
-
-url2 = "https://sbb2.prospective.ch/?sprCd=de" 
-
-
-url_list = []
-for tag in soup.find_all('a'):
-    link = tag.get('onclick')
-    if(link is not None):
-        url = re.search('(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})',link).group()
-        url = re.sub('\'|\"|,','',url)
-        if(url not in url_list):
-            url_list.append(url)
-print(url_list) 
-
-s = "window.open(\'http://direktlink.prospective.ch?view=611a7e8c-26cf-466e-affb-f625e1b32774\', \'_blank\', \'width=668,height=710,location=yes,scrollbars=yes,left=100,top=200,resizable=yes\')"
-'''
