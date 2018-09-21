@@ -29,14 +29,21 @@ f.close()
 
 blacklist_company_names = []
 blacklist_company_url = []
-with io.open("site_blacklist.csv", "r", encoding="utf-8") as file:
-     blacklist = file.read().split("\n")
 
-for entry in blacklist:
-    split_entry = entry.split(",")
-    blacklist_company_url.append(split_entry[0])
-    blacklist_company_names.append(split_entry[1])
 
+
+
+def get_blacklist_dict(csv_filename = "site_blacklist.csv"):
+    with io.open("site_blacklist.csv", "r", encoding="utf-8") as file:
+        blacklist = file.read().split("\n")
+    for entry in blacklist:
+        split_entry = entry.split(",")
+        blacklisted_company_name = split_entry[1]
+        blacklisted_company_url = split_entry[0]
+        if(blacklisted_company_url is not None):
+            config.blacklist[blacklisted_company_url] = blacklisted_company_name
+        # blacklist_company_url.append(split_entry[0])
+        # blacklist_company_names.append(split_entry[1])
 
 for entry in table_companies:
     new_entry = entry

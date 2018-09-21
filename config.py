@@ -1,4 +1,9 @@
 '''
+database folder path
+'''
+db_folder_path = "databases/"
+
+'''
 tags_subtags store the paired Tags and subtags for extraction of links by the spider class
 '''
 links_tags_subtags = [('a','href'),
